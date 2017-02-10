@@ -1,0 +1,96 @@
+$header-margin: 1vw;
+$back-color: grey;
+$text-color: purple;
+$neon-shadow: #DDDDDD;
+$main-font-size: 6vw;
+$main-height: 200px;
+$secondary-font-size: 20px;
+$secondary-height: 120px;
+$shadow: 0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px $neon-shadow, 0 0 70px #7FDBFF , 0 0 80px $neon-shadow , 0 0 100px $neon-shadow ;
+$length-size: 18px;
+$marg: 2vw;
+
+
+.App {
+  background-color: $back-color;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+}
+
+
+.header {
+  align-self: center;
+  font-size: $main-font-size;
+  margin: $header-margin;
+  color: $text-color;
+  text-shadow: $shadow;
+}
+
+.clock {
+  color: $text-color;
+  text-shadow: $shadow;
+  box-shadow: $shadow;
+  font-size: $secondary-font-size;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border: 5px solid $text-color * 0.5;
+  border-radius: 50%;
+  height: $main-height;
+  width: $main-height;
+}
+
+.ses {
+  font-size: $secondary-font-size * 1.7;
+}
+
+.small-box {
+  color: $text-color;
+  text-shadow: $shadow;
+  box-shadow: $shadow;
+  font-size: $secondary-font-size;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  border: 5px solid $text-color * 0.5;
+  border-radius: 50%;
+  height: $secondary-height;
+  width: $secondary-height;
+  padding: 0px 5px;
+}
+
+.ses-length {
+  height: $secondary-height * 1.3;
+  width: $secondary-height * 1.3;
+}
+
+.length {
+  width: 100%;
+  font-size: $length-size;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+@mixin hover {
+  color: $text-color * 1.5;
+}
+
+.changer:hover {
+  @include hover;
+}
+
+.clock:hover {
+  @include hover;
+}
