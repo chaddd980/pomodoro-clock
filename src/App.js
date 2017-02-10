@@ -201,7 +201,7 @@ class Clock extends Component {
     return (
       <div className="clock" style={{cursor:'pointer'}} onClick={() => this.handleClick()}>
         <div className="ses">Session</div>
-        {("0" + this.props.minutes).slice(-2)}:{("0" + this.props.seconds).slice(-2)}
+        <div>{("0" + this.props.minutes).slice(-2)}:{("0" + this.props.seconds).slice(-2)}</div>
       </div>
     );
   }
@@ -239,9 +239,9 @@ class Time extends Component {
       <div className="small-box ses-length">
         <p>Session Length</p>
         <div className="length">
-          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.timeDecrement()}>-</div>
+          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.timeDecrement()}><button>-</button></div>
           <p>{this.state.minutes}</p>
-          <div className="changer increment" style={{cursor:'pointer'}} onClick={() => this.timeIncrement()}>+</div>
+          <div className="changer increment" style={{cursor:'pointer'}} onClick={() => this.timeIncrement()}><button>+</button></div>
         </div>
       </div>
     );
@@ -287,9 +287,9 @@ class Break extends Component {
       <div className="small-box">
         <p>Break Length</p>
         <div className="length">
-          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakDecrement()}>-</div>
+          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakDecrement()}><button>-</button></div>
           <p>{this.state.minutes}</p>
-          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakIncrement()}>+</div>
+          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakIncrement()}><button>+</button></div>
         </div>
       </div>
     );

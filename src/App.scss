@@ -18,6 +18,12 @@ $marg: 2vw;
   flex-direction: column;
 }
 
+button {
+  background-color: $back-color;
+  border-radius: 50%;
+  padding: 0px 6px 0px;
+  border-width: 1px;
+}
 
 a {
   color: $text-color;
