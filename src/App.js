@@ -10,13 +10,33 @@ class App extends Component {
       seconds: 0,
       count: 0,
       on: false,
-      end: false
+      end: false,
+      background: true,
+      breakOn: false
     }
   }
 
   componentDidUpdate() {
-    if(this.state.minutes === 0 && this.state.seconds === 0) {
+    if(this.state.minutes === 0 && this.state.seconds === 0 && this.state.breakOn === false) {
+      this.setState({
+        background: false,
+        minutes: this.state.breakMinutes,
+        breakOn: true,
+      })
+    } else if (this.state.minutes === 0 && this.state.seconds === 0 && this.state.breakOn === true) {
+        this.setState({
+          background: true,
+          minutes: 25,
+          breakOn: false,
+        })
+    }
+  }
 
+  changeBackground() {
+    if(this.state.background) {
+      return "normal-background"
+    } else {
+      return "alert-background"
     }
   }
 
@@ -86,7 +106,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" id={this.changeBackground()}>
         <Header />
         <Clock restartCount={this.restartCount.bind(this)} startCount={this.startCount.bind(this)} toggleCount={this.toggleCount.bind(this)} endCount={this.endCount.bind(this)} minutes={this.state.minutes} seconds={this.state.seconds} count={this.state.count} on={this.state.on} end={this.state.end} reduceMinutes={this.reduceMinutes.bind(this)} reduceSeconds={this.reduceSeconds.bind(this)}/>
         <Time on={this.state.on} increment={this.handleIncrement.bind(this)} decrement={this.handleDecrement.bind(this)} minutes={this.state.minutes} />
@@ -167,17 +187,21 @@ class Time extends Component {
   }
 
   timeDecrement() {
-    this.props.decrement()
-    this.setState({
-      minutes: this.state.minutes - 1
-    })
+    if(this.props.on === false) {
+      this.props.decrement()
+      this.setState({
+        minutes: this.state.minutes - 1
+      })
+    }
   }
 
   timeIncrement() {
-    this.props.increment()
-    this.setState({
-      minutes: this.state.minutes + 1
-    })
+    if(this.props.on === false) {
+      this.props.increment()
+      this.setState({
+        minutes: this.state.minutes + 1
+      })
+    }
   }
 
   render() {

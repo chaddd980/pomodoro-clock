@@ -21,6 +21,13 @@ $marg: 2vw;
   // align-items: center;
 }
 
+#alert-background {
+  background-color: red;
+}
+
+#normal-background {
+  background-color: $back-color;
+}
 
 .header {
   align-self: center;
