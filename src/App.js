@@ -12,7 +12,8 @@ class App extends Component {
       on: false,
       end: false,
       background: true,
-      breakOn: false
+      breakOn: false,
+      customSessionLength: 25
     }
   }
 
@@ -22,11 +23,12 @@ class App extends Component {
         background: false,
         minutes: this.state.breakMinutes,
         breakOn: true,
+        // on: false
       })
     } else if (this.state.minutes === 0 && this.state.seconds === 0 && this.state.breakOn === true) {
         this.setState({
           background: true,
-          minutes: 25,
+          minutes: this.state.customSessionLength,
           breakOn: false,
         })
     }
@@ -41,29 +43,43 @@ class App extends Component {
   }
 
   handleDecrementBreak() {
-    this.setState({
-      breakMinutes: this.state.breakMinutes - 1
-    })
+    if(this.state.breakOn) {
+      this.setState({
+        minutes: this.state.minutes - 1
+      })
+    } else {
+      this.setState({
+        breakMinutes: this.state.breakMinutes - 1
+      })
+    }
   }
 
   handleIncrementBreak() {
-    this.setState({
-      breakMinutes: this.state.breakMinutes + 1
-    })
+    if(this.state.breakOn) {
+      this.setState({
+        minutes: this.state.minutes + 1
+      })
+    } else {
+      this.setState({
+        breakMinutes: this.state.breakMinutes + 1
+      })
+    }
   }
 
   handleDecrement() {
-    if(this.state.on === false) {
+    if(this.state.on === false && this.state.breakOn === false) {
       this.setState({
-        minutes: this.state.minutes - 1
+        minutes: this.state.minutes - 1,
+        customSessionLength: this.state.customSessionLength - 1
       })
     }
   }
 
   handleIncrement() {
-    if(this.state.on === false) {
+    if(this.state.on === false && this.state.breakOn === false) {
       this.setState({
-        minutes: this.state.minutes + 1
+        minutes: this.state.minutes + 1,
+        customSessionLength: this.state.customSessionLength + 1
       })
     }
   }
@@ -109,8 +125,8 @@ class App extends Component {
       <div className="App" id={this.changeBackground()}>
         <Header />
         <Clock restartCount={this.restartCount.bind(this)} startCount={this.startCount.bind(this)} toggleCount={this.toggleCount.bind(this)} endCount={this.endCount.bind(this)} minutes={this.state.minutes} seconds={this.state.seconds} count={this.state.count} on={this.state.on} end={this.state.end} reduceMinutes={this.reduceMinutes.bind(this)} reduceSeconds={this.reduceSeconds.bind(this)}/>
-        <Time on={this.state.on} increment={this.handleIncrement.bind(this)} decrement={this.handleDecrement.bind(this)} minutes={this.state.minutes} />
-        <Break increment={this.handleIncrementBreak.bind(this)} decrement={this.handleDecrementBreak.bind(this)} breakMinutes={this.state.breakMinutes} />
+        <Time breakOn={this.state.breakOn} on={this.state.on} increment={this.handleIncrement.bind(this)} decrement={this.handleDecrement.bind(this)} minutes={this.state.minutes} seconds={this.state.seconds} />
+        <Break on={this.state.on} increment={this.handleIncrementBreak.bind(this)} decrement={this.handleDecrementBreak.bind(this)} breakMinutes={this.state.breakMinutes} />
       </div>
     );
   }
@@ -186,8 +202,16 @@ class Time extends Component {
     }
   }
 
+  // componentDidUpdate() {
+  //   if(this.props.minutes === 0 && this.props.seconds === 0 && this.props.breakOn === false) {
+  //     this.setState({
+  //       minutes: 25
+  //     })
+  //   }
+  // }
+
   timeDecrement() {
-    if(this.props.on === false) {
+    if(this.props.on === false && this.props.breakOn === false) {
       this.props.decrement()
       this.setState({
         minutes: this.state.minutes - 1
@@ -196,7 +220,7 @@ class Time extends Component {
   }
 
   timeIncrement() {
-    if(this.props.on === false) {
+    if(this.props.on === false && this.props.breakOn === false) {
       this.props.increment()
       this.setState({
         minutes: this.state.minutes + 1
@@ -219,14 +243,47 @@ class Time extends Component {
 }
 
 class Break extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      minutes: 5
+    }
+  }
+
+  componentDidUpdate() {
+    if(this.state.minutes === 0) {
+      this.setState({
+        minutes: 5
+      })
+    }
+  }
+
+  breakDecrement() {
+    if(this.props.on === false) {
+      this.props.decrement()
+      this.setState({
+        minutes: this.state.minutes - 1
+      })
+    }
+  }
+
+  breakIncrement() {
+    if(this.props.on === false) {
+      this.props.increment()
+      this.setState({
+        minutes: this.state.minutes + 1
+      })
+    }
+  }
+
   render() {
     return (
       <div className="small-box">
         <p>Break Length</p>
         <div className="length">
-          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.props.decrement()}>-</div>
-          <p>{this.props.breakMinutes}</p>
-          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.props.increment()}>+</div>
+          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakDecrement()}>-</div>
+          <p>{this.state.minutes}</p>
+          <div className="changer decrement" style={{cursor:'pointer'}} onClick={() => this.breakIncrement()}>+</div>
         </div>
       </div>
     );
