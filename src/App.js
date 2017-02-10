@@ -127,6 +127,7 @@ class App extends Component {
         <Clock restartCount={this.restartCount.bind(this)} startCount={this.startCount.bind(this)} toggleCount={this.toggleCount.bind(this)} endCount={this.endCount.bind(this)} minutes={this.state.minutes} seconds={this.state.seconds} count={this.state.count} on={this.state.on} end={this.state.end} reduceMinutes={this.reduceMinutes.bind(this)} reduceSeconds={this.reduceSeconds.bind(this)}/>
         <Time breakOn={this.state.breakOn} on={this.state.on} increment={this.handleIncrement.bind(this)} decrement={this.handleDecrement.bind(this)} minutes={this.state.minutes} seconds={this.state.seconds} />
         <Break on={this.state.on} increment={this.handleIncrementBreak.bind(this)} decrement={this.handleDecrementBreak.bind(this)} breakMinutes={this.state.breakMinutes} />
+        <Footer />
       </div>
     );
   }
@@ -137,6 +138,19 @@ class Header extends Component {
     return (
       <div className="header">
         <p>Pomodoro Clock</p>
+      </div>
+    )
+  }
+}
+
+class Footer extends Component {
+  render() {
+    return (
+      <div className="footer">
+        <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank"><div>
+          <p>This app is based off of the Pomodoro time management technique.</p>
+          <p>To learn more about the technique, and how you can make use of this app to be more productive please click here</p>
+        </div></a>
       </div>
     )
   }
@@ -201,14 +215,6 @@ class Time extends Component {
       minutes: this.props.minutes
     }
   }
-
-  // componentDidUpdate() {
-  //   if(this.props.minutes === 0 && this.props.seconds === 0 && this.props.breakOn === false) {
-  //     this.setState({
-  //       minutes: 25
-  //     })
-  //   }
-  // }
 
   timeDecrement() {
     if(this.props.on === false && this.props.breakOn === false) {
